@@ -1,0 +1,37 @@
+#!/bin/bash
+#此脚本用来 DIY ROM 用
+#制作者：陈云
+#写于2014年3月 窝窝
+#写于2014年4月 深圳语信公司
+#写于2014年6月 深圳语信公司
+#写于2014年7月 深圳云雀公司
+PATH=/bin:/sbin:/usr/bin:usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin:~/yun
+export PATH
+app=app
+make_SystemUI(){
+	echo -e "\033[33m------SysytemUI------\033[0m"
+		echo $device
+		case $device in
+			"la2e" )
+				echo "cd packages/SystemUI/MSM8625Q "
+				cd packages/SystemUI/MSM8625Q;;
+			"la5w" )
+				echo "cd packages/SystemUI/MTK6592"
+				app="priv-app"
+				cd packages/SystemUI/MTK6592;;
+			"la3sw" ) 
+				echo "cd packages/SystemUI/MSM8228"
+				cd packages/SystemUI/MSM8228;;
+			"la2wmsm" )
+				echo "cd packages/SystemUI/MSM8228"
+				cd packages/SystemUI/MSM8228;;
+			"la3w" )
+				echo "cd packages/SystemUI/MSM8228"
+				cd packages/SystemUI/MSM8228;;
+		esac
+		b SystemUI
+		echo -e "\033[32minstall out/SystemUI.apk---> ../../../out/$device/system/app/SystemUI.apk\033[0m"
+		mv out/SystemUI.apk ../../../out/$device/system/app/SystemUI.apk
+		rmout
+		cd ../../../
+}

@@ -1,0 +1,73 @@
+#!/bin/bash
+#此脚本用来 DIY ROM 用
+#制作者：陈云
+#写于2014年3月 窝窝
+#写于2014年4月 深圳语信公司
+#写于2014年6月 深圳语信公司
+PATH=/bin:/sbin:/usr/bin:usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin:~/yun
+export PATH
+#####变量区#####
+device=$1
+
+##########
+
+#java check
+	echo "JDK INFORMATION:"
+	echo "`java -version` "
+	if [[ $? = 1 ]]; then
+		
+		echo -e "\033[31mplease install JDK envirmoment\033[0m"
+	fi
+#device_config check
+	cd devices
+	if [ ! -d "$device" ]; then 
+		 mkdir "$device"
+	else echo "$device folder exist" 
+ 	fi 
+ 	cd $device
+ 	build="build.config"
+ 	if [ ! -f "$build" ]; then 
+ 		mv ../../build/build.config ./
+ 		subl build.config
+ 	else echo "$device build_config exist" 
+ 	fi 
+ 	cd ../../
+ 	echo `pwd`
+#device package check
+	cd vendor
+	if [ ! -d "$device" ]; then 
+		 mkdir "$device"
+	else echo "$device vendor folder exist" 
+ 	fi 
+ 	cd $device
+ 	echo `pwd`
+ 	if [ ! -d "system" ]; then 
+		echo -e "\033[31merror: no system folder founded ! now check system package....\033[0m"
+		read
+		mv *.zip package.zip > /dev/null
+		package="package.zip"
+		if [ ! -f "$package" ]; then 
+ 		#echo "error: no zip package found ,please put a zip package here !"
+ 		echo -e "\033[31merror: no zip package found ,please put a zip package here ! \033[0m" 
+ #	echo -e "\033[36m something here \033[0m"
+ 		else unzip package.zip
+ 		fi
+	else echo "$device vendor folder exist" 
+ 	fi 
+ 	cd ../../
+#output check
+	cd out
+	if [ ! -d "$device" ]; then 
+		 mkdir "$device"
+	else echo "$device output folder exist" 
+ 	fi 
+ 	if [ ! -d "system" ]; then 
+		./build/copy_files $device
+	else echo "$device output folder exist" 
+ 	fi 
+ 	
+ 	cd ../
+
+echo "check completed, now let's work!"
+
+

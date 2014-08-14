@@ -1,0 +1,28 @@
+#!/bin/bash
+#此脚本用来 DIY ROM 用
+#制作者：陈云
+#写于2014年3月 窝窝
+#写于2014年4月 深圳语信公司
+#写于2014年6月 深圳语信公司
+#写于2014年7月 深圳云雀公司
+PATH=/bin:/sbin:/usr/bin:usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin:~/yun
+export PATH
+#####################
+app=app
+#################
+make_Contacts(){
+	echo -e "\033[33m------Contacts & Dialer------\033[0m"
+		if [[ "$device" == "la2e" ]]; then
+			cd packages/Contacts/MSM8625Q
+		else
+			cd packages/Dialer
+			b Dialer
+			mv out/Dialer.apk ../../out/$device/system/$app/Dialer.apk
+			rmout
+			cd ../Contacts/MSM8228
+		fi
+		b Contacts
+		mv out/Contacts.apk ../../../out/$device/system/$app/Contacts.apk
+		rmout
+		cd ../../../
+}

@@ -1,0 +1,27 @@
+#!/bin/bash
+#此脚本用来 DIY ROM 用
+#制作者：陈云
+#写于2014年3月 窝窝
+#写于2014年4月 深圳语信公司
+#写于2014年6月 深圳语信公司
+#写于2014年7月 深圳云雀公司
+PATH=/bin:/sbin:/usr/bin:usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin:~/yun
+export PATH
+#####################
+app=app
+#################
+make_Phone(){
+	echo -e "\033[33m------Phone------\033[0m"
+		if [[ "$device" == "la2e" ]]; then
+			echo "cannot build Phone in linux!"
+		else 
+		cd packages/Phone/MSM8228
+		b Phone
+		echo -e "\033[32minstall out/Phone.apk---> ../../../out/$device/system/app/Phone.apk\033[0m"
+		mv out/Phone.apk ../../../out/$device/system/$app/Phone.apk
+		#stop
+		rmout
+		cd ../../../
+		fi
+		
+}

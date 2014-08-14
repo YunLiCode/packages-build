@@ -1,0 +1,25 @@
+#!/bin/bash
+#此脚本用来 DIY ROM 用
+#制作者：陈云
+#写于2014年3月 窝窝
+#写于2014年4月 深圳语信公司
+#写于2014年6月 深圳语信公司
+#写于2014年7月 深圳云雀公司
+PATH=/bin:/sbin:/usr/bin:usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin:~/yun
+export PATH
+#####################
+app=app
+#################
+make_Gallery2(){
+	echo -e "\033[33m------Camera & Gallery------\033[0m"
+		if [[ "$device" == "la2e" ]]; then
+			# cd packages/Gallery2/MSM8625Q
+			echo "Gallery2 resource found"
+		else
+			cd packages/Gallery2/MSM8228
+		fi
+		b Gallery2
+		mv out/Gallery2.apk ../../../out/$device/system/$app/Gallery2.apk
+		rmout
+		cd ../../../
+}

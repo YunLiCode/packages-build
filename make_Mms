@@ -1,0 +1,25 @@
+#!/bin/bash
+#此脚本用来 DIY ROM 用
+#制作者：陈云
+#写于2014年3月 窝窝
+#写于2014年4月 深圳语信公司
+#写于2014年6月 深圳语信公司
+#写于2014年7月 深圳云雀公司
+PATH=/bin:/sbin:/usr/bin:usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin:~/yun
+export PATH
+#####################
+app=app
+#################
+make_Mms(){
+	echo -e "\033[33m------Mms------\033[0m"
+		if [[ "$device" == "la2e" ]]; then
+			# //cd packages/Mms/MSM8625Q
+			echo "No Mms Resouce found"
+		else
+			cd packages/Mms/MSM8228
+		fi
+		b Mms
+		mv out/Mms.apk ../../../out/$device/system/$app/Mms.apk
+		rmout
+		cd ../../../
+}
