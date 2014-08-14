@@ -1,0 +1,25 @@
+#!/bin/bash
+#此脚本用来 DIY ROM 用
+#制作者：陈云
+#写于2014年3月 窝窝
+#写于2014年4月 深圳语信公司
+#写于2014年6月 深圳语信公司
+#写于2014年7月 深圳云雀公司
+PATH=/bin:/sbin:/usr/bin:usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin:~/yun
+export PATH
+
+make_launcher(){
+	echo -e "\033[33m------launcher------\033[0m"
+		cd packages/launcher2
+		if [[ "$device" == "la2e" || "$device" == "la2wmsm"  || "$device" == "la2l" || "$device" == "la5w" ]]; then
+			echo "cp 720P/default_layout.xml common/assets/default/default_layout.xml"
+			cp 720P/default_layout.xml common/assets/default/default_layout.xml
+		else
+			echo "cp 1080P/default_layout.xml common/assets/default/default_layout.xml"
+			cp 1080P/default_layout.xml common/assets/default/default_layout.xml
+		fi
+		b common
+		mv out/common.apk ../../out/$device/system/app/launcher.apk 
+		rmout
+		cd ../../
+}

@@ -7,14 +7,14 @@
 #写于2014年7月 深圳云雀公司
 PATH=/bin:/sbin:/usr/bin:usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin:~/yun
 export PATH
+
 make_Batterymonitor(){
 	echo -e "\033[33m------batterymonitor------\033[0m"
+	cd packages/BatteryManager
 	echo -e "\033[32mcp packages/batterymonitor/bin/batterymonitor.apk ---> out/$device/system/app/Batterymonitor.apk\033[0m"
-	case $device in
-		"la5w" )
-			
-			;;
-	esac
-	cp packages/batterymonitor/bin/batterymonitor.apk out/$device/system/app/Batterymonitor.apk
+	cp $device/integers.xml common/res/values/integers.xml
+	b common
+	echo -e "\033[32mcp packages/batterymonitor/bin/batterymonitor.apk ---> out/$device/system/app/Batterymonitor.apk\033[0m"
+	mv out/common.apk ../../out/$device/system/app/BatteryManager.apk
 		
 }
