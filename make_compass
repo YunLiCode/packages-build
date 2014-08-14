@@ -1,0 +1,16 @@
+#!/bin/bash
+#此脚本用来 DIY ROM 用
+#制作者：陈云
+#写于2014年3月 窝窝
+#写于2014年4月 深圳语信公司
+#写于2014年6月 深圳语信公司
+#写于2014年7月 深圳云雀公司
+PATH=/bin:/sbin:/usr/bin:usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin:~/yun
+export PATH
+
+make_compass(){
+	echo -e "\033[33m------compass------\033[0m"
+	echo -e "\033[32mpackages/compass/bin/MainActivity_compass.apk ---> out/$device/system/app/compass.apk\033[0m"
+	cp packages/compass/bin/MainActivity_compass.apk out/$device/system/app/compass.apk
+
+}
