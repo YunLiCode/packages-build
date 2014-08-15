@@ -7,12 +7,8 @@
 #写于2014年7月 深圳云雀公司
 PATH=/bin:/sbin:/usr/bin:usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin:~/yun
 export PATH
-
-make_browser(){
-	echo -e "\033[33m------browser------\033[0m"
-	cd packages/browser
-	b browser$androidversion
-	rmout
-	mv out/browser$android.apk ../../out/$device/system/app/browser.apk
-	cd ../../
+make_weather(){
+	echo -e "\033[33m------weather------\033[0m"
+	cp packages/Weather/bin/LewaWeather.apk out/$device/system/app/Weather.apk
+	echo -e "\033[32mpackages/Weather/bin/LewaWeather.apk --> out/$device/system/app/Weather.apk\033[0m"
 }

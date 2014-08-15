@@ -16,7 +16,7 @@ make_Mms(){
 			# //cd packages/Mms/MSM8625Q
 			echo "No Mms Resouce found"
 		else
-			cd packages/Mms/MSM8228
+			cd packages/Mms/$CPU
 		fi
 		b Mms
 		mv out/Mms.apk ../../../out/$device/system/$app/Mms.apk

@@ -11,13 +11,8 @@ export PATH
 make_launcher(){
 	echo -e "\033[33m------launcher------\033[0m"
 		cd packages/launcher2
-		if [[ "$device" == "la2e" || "$device" == "la2wmsm"  || "$device" == "la2l" || "$device" == "la5w" ]]; then
-			echo "cp 720P/default_layout.xml common/assets/default/default_layout.xml"
-			cp 720P/default_layout.xml common/assets/default/default_layout.xml
-		else
-			echo "cp 1080P/default_layout.xml common/assets/default/default_layout.xml"
-			cp 1080P/default_layout.xml common/assets/default/default_layout.xml
-		fi
+			echo "cp $screen/default_layout.xml common/assets/default/default_layout.xml"
+			cp $screen/default_layout.xml common/assets/default/default_layout.xml
 		b common
 		mv out/common.apk ../../out/$device/system/app/launcher.apk 
 		rmout

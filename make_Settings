@@ -12,13 +12,7 @@ app=app
 #################
 make_Settings(){
 	echo -e "\033[33m------Settings------\033[0m"
-		if [[ "$device" == "la2e" ]]; then
-			cd packages/Settings/MSM8625Q
-		elif [[  "$device"  == "la2l" ]]; then
-			cd packages/Settings/MSM8926
-		else
-			cd packages/Settings/MSM8228
-		fi
+		cd packages/Settings/$CPU
 		b Settings
 		mv out/Settings.apk ../../../out/$device/system/app/Settings.apk
 		rmout

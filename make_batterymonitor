@@ -11,10 +11,10 @@ export PATH
 make_Batterymonitor(){
 	echo -e "\033[33m------batterymonitor------\033[0m"
 	cd packages/BatteryManager
-	echo -e "\033[32mcp packages/batterymonitor/bin/batterymonitor.apk ---> out/$device/system/app/Batterymonitor.apk\033[0m"
+	echo -e "\033[32mcp $device/integers.xml common/res/values/integers.xml\033[0m"
 	cp $device/integers.xml common/res/values/integers.xml
 	b common
-	echo -e "\033[32mcp packages/batterymonitor/bin/batterymonitor.apk ---> out/$device/system/app/Batterymonitor.apk\033[0m"
+	echo -e "\033[32mout/common.apk ---> ../../out/$device/system/app/BatteryManager.apk\033[0m"
 	mv out/common.apk ../../out/$device/system/app/BatteryManager.apk
-		
+	cd ../../	
 }

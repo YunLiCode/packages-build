@@ -8,11 +8,8 @@
 PATH=/bin:/sbin:/usr/bin:usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin:~/yun
 export PATH
 
-make_browser(){
-	echo -e "\033[33m------browser------\033[0m"
-	cd packages/browser
-	b browser$androidversion
-	rmout
-	mv out/browser$android.apk ../../out/$device/system/app/browser.apk
-	cd ../../
+make_soundrecorder(){
+	echo -e "\033[33m------soundrecorder-----\033[0m"
+	echo -e "\033[32mpackages/soundrecoder/bin/SoundRecorder.apk ---> out/$device/system/app/SoundRecorder.apk\033[0m"
+	cp packages/soundrecoder/bin/SoundRecorder.apk out/$device/system/app/SoundRecorder.apk
 }

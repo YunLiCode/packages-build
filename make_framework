@@ -9,31 +9,7 @@ PATH=/bin:/sbin:/usr/bin:usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin:~/yun
 export PATH
 make_framework-res(){
 	echo -e "\033[33m------framework-res------\033[0m"
-		case $device in
-			"la2e" )
-				echo "cd framework/MSM8625Q "
-				cd framework/MSM8625Q;;
-			"la5w" )
-				echo "cd framework/MSM8926"
-				app="priv-app"
-				cd framework/MTK6592;;
-			"la3sw" ) 
-				echo "framework/MSM8228"
-				cd framework/MSM8228;;
-			"la2wmsm" )
-				echo "framework/MSM8228"
-				cd framework/MSM8228;;
-			"la3w" )
-				echo "framework/MSM8228"
-				cd framework/MSM8228;;
-		esac
-		if [[ "$device" == "la2e" ]]; then
-			cd framework/MSM8625Q
-		elif [[  "$device" == "la2l" ]]; then
-			cd framework/MSM8926
-		else
-			cd framework/MSM8228
-		fi
+		cd framework/$CPU;;
 		b framework-res
 			echo -e "\033[32minstall out/framework-res.apk --> ../../out/$device/system/framework/framework-res.apk\033[0m"
 			mv out/framework-res.apk ../../out/$device/system/framework/framework-res.apk

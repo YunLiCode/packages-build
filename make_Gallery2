@@ -16,7 +16,7 @@ make_Gallery2(){
 			# cd packages/Gallery2/MSM8625Q
 			echo "Gallery2 resource found"
 		else
-			cd packages/Gallery2/MSM8228
+			cd packages/Gallery2/$CPU
 		fi
 		b Gallery2
 		mv out/Gallery2.apk ../../../out/$device/system/$app/Gallery2.apk

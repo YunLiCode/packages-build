@@ -11,27 +11,11 @@ app=app
 make_SystemUI(){
 	echo -e "\033[33m------SysytemUI------\033[0m"
 		echo $device
-		case $device in
-			"la2e" )
-				echo "cd packages/SystemUI/MSM8625Q "
-				cd packages/SystemUI/MSM8625Q;;
-			"la5w" )
-				echo "cd packages/SystemUI/MTK6592"
-				app="priv-app"
-				cd packages/SystemUI/MTK6592;;
-			"la3sw" ) 
-				echo "cd packages/SystemUI/MSM8228"
-				cd packages/SystemUI/MSM8228;;
-			"la2wmsm" )
-				echo "cd packages/SystemUI/MSM8228"
-				cd packages/SystemUI/MSM8228;;
-			"la3w" )
-				echo "cd packages/SystemUI/MSM8228"
-				cd packages/SystemUI/MSM8228;;
-		esac
+		echo "cd packages/SystemUI/$CPU "
+		cd packages/SystemUI/$CPU
 		b SystemUI
-		echo -e "\033[32minstall out/SystemUI.apk---> ../../../out/$device/system/app/SystemUI.apk\033[0m"
-		mv out/SystemUI.apk ../../../out/$device/system/app/SystemUI.apk
+		echo -e "\033[32minstall out/SystemUI.apk---> ../../../out/$device/system/$app/SystemUI.apk\033[0m"
+		mv out/SystemUI.apk ../../../out/$device/system/$app/SystemUI.apk
 		rmout
 		cd ../../../
 }

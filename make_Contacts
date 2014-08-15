@@ -9,19 +9,26 @@ PATH=/bin:/sbin:/usr/bin:usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin:~/yun
 export PATH
 #####################
 app=app
+echo $CPU
 #################
+
 make_Contacts(){
+	if [[ "$device" == "la5w" ]]; then
+	app="priv-app"
+fi
 	echo -e "\033[33m------Contacts & Dialer------\033[0m"
 		if [[ "$device" == "la2e" ]]; then
-			cd packages/Contacts/MSM8625Q
+			cd packages/Contacts/$CPU
 		else
-			cd packages/Dialer
+			cd packages/Dialer/$CPU
 			b Dialer
-			mv out/Dialer.apk ../../out/$device/system/$app/Dialer.apk
+			echo -e "\033[32mmv out/Dialer.apk ../../out/$device/system/$app/Dialer.apk\033[0m"
+			mv out/Dialer.apk ../../../out/$device/system/$app/Dialer.apk
 			rmout
-			cd ../Contacts/MSM8228
+			cd ../../Contacts/$CPU
 		fi
 		b Contacts
+		echo -e "\033[32mout/Contacts.apk ../../../out/$device/system/$app/Contacts.apk\033[0m"
 		mv out/Contacts.apk ../../../out/$device/system/$app/Contacts.apk
 		rmout
 		cd ../../../

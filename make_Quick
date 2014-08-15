@@ -10,13 +10,9 @@ export PATH
 
 make_Quick(){
 	echo -e "\033[33m------QuickSearch------\033[0m"
-	case "$device" in
-		"la2w" )cd packages/QuickSearch/MSM8228;;
-		"la3w" )cd packages/QuickSearch/MSM8228;;
-		"la5w" )cd packages/QuickSearch/MT6592;;
-	esac
+	cd packages/QuickSearch/$CPU
 	b QuickSearchBox
 	mv out/QuickSearchBox.apk ../../../out/$device/system/app/QuickSearchBox.apk
-		rmout
-		cd ../../../
+	rmout
+	cd ../../../
 }
