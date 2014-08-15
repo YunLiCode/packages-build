@@ -9,7 +9,7 @@ PATH=/bin:/sbin:/usr/bin:usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin:~/yun
 export PATH
 make_framework-res(){
 	echo -e "\033[33m------framework-res------\033[0m"
-		cd framework/$CPU;;
+		cd framework/$CPU
 		b framework-res
 			echo -e "\033[32minstall out/framework-res.apk --> ../../out/$device/system/framework/framework-res.apk\033[0m"
 			mv out/framework-res.apk ../../out/$device/system/framework/framework-res.apk

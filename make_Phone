@@ -11,6 +11,9 @@ export PATH
 app=app
 #################
 make_Phone(){
+	if [[ "$androidversion" == "4.4" ]]; then
+		app=priv-app
+	fi
 	echo -e "\033[33m------Phone------\033[0m"
 		if [[ "$device" == "la2e" ]]; then
 			echo "cannot build Phone in linux!"
