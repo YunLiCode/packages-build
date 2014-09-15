@@ -1,0 +1,34 @@
+#!/bin/bash
+#此脚本用来 DIY ROM 用
+#制作者：陈云
+#写于2014年3月 窝窝
+#写于2014年4月 深圳语信公司
+#写于2014年6月 深圳语信公司
+#写于2014年7月 深圳云雀公司
+PATH=/bin:/sbin:/usr/bin:usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin:~/yun
+export PATH
+
+##########变量区##########
+root=$1
+#################
+cp_prebuild_apk(){
+	mkdir -p out/$device/system/app > /dev/null
+	echo -e "\033[32minstall vendor/app/baidu_input.apk---> out/$device/system/app/baidu.apk\033[0m"
+	cp vendor/app/baidu_input.apk out/$device/system/app/baidu.apk
+	mkdir -p out/$device/system/lib > /dev/null
+	echo "finish"
+	echo -e "\033[32minstall vendor/app/ttpod_music.apk--> out/$device/system/app/music.apk\033[0m"
+	cp vendor/app/ttpod_music.apk out/$device/system/app/music.apk
+	echo "cp depence lib to $device system..."
+	libpath=`ls vendor/lib/`
+	for lib in $libpath
+	do
+		echo -e "\033[32mcopy vendor/lib/$lib---> out/$device/system/lib/\033[0m"
+		cp vendor/lib/$lib out/$device/system/lib/ 
+	done
+	if [[ "$root" == "y" ]]; then
+		cp vendor/app/RootExplorer.apk out/$device/system/app/RootExplorer.apk
+		cp vendor/app/SuperSUPro.apk out/$device/system/app/SuperSU.apk
+	else echo -e "\033[31muser mod without root!!\033[0m"
+	fi
+	}

@@ -19,11 +19,11 @@ make_Phone(){
 			echo "cannot build Phone in linux!"
 		else 
 		cd packages/Phone/$CPU
-		b Phone
+		# b Phone
 		echo -e "\033[32minstall out/Phone.apk---> ../../../out/$device/system/app/Phone.apk\033[0m"
-		mv out/Phone.apk ../../../out/$device/system/$app/Phone.apk
+		cp Phone.apk ../../../out/$device/system/$app/Phone.apk
 		#stop
-		rmout
+		#rmout
 		cd ../../../
 		fi
 		

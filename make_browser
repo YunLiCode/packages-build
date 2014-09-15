@@ -13,6 +13,6 @@ make_browser(){
 	cd packages/browser
 	b browser$androidversion
 	rmout
-	mv out/browser$android.apk ../../out/$device/system/app/browser.apk
+	mv out/browser$androidversion.apk ../../out/$device/system/app/browser.apk
 	cd ../../
 }
