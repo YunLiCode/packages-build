@@ -1,0 +1,244 @@
+#!/bin/bash
+#此脚本用来 DIY ROM 用
+#制作者：陈云
+#写于2014年3月 窝窝
+#写于2014年4月 深圳语信公司
+#写于2014年6月 深圳语信公司
+PATH=/bin:/sbin:/usr/bin:usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin:~/yun
+export PATH
+
+chmod 777 build/*
+# set -v on
+set -e errexit
+#####################
+appfolder="out/$device/system/app"
+DATE=`date "+%Y%m%d%H%M" `
+display_version="LAUI 1.3"
+package_version="1.3"
+mini=$1
+
+#######################
+
+cp_media (){
+	mkdir -p out/$device/system/media/audio > /dev/null
+	echo -e "\033[32minstalling audio resource to $device package....\033[0m"
+	cp -rf media/audio out/$device/system/media
+	echo "finish......"
+	echo "The device resolution is $screen"
+	echo -e "\033[32minstalling $screen bootanimation to $device package .....\033[0m"
+	cp media/bootanimation/$screen.zip out/$device/system/media/bootanimation.zip
+	echo "finish......"
+	mkdir -p out/$device/system/fonts > /dev/null
+	echo -e "\033[33mcopy fonts\033[0m"
+	cp -rf media/fonts out/$device/system
+	echo -e "\033[32mfinish to copy fonts\033[0m"
+	}
+
+
+cp_Souce_code_apk(){
+	source build/make_compass
+	source build/make_weather
+	source build/make_soundrecorder
+	echo -e "\033[33m------Calculator-----\033[0m"
+	cp packages/calculator/bin/Calculator.apk out/$device/system/app/
+	echo -e "\033[32mpackages/calculator/bin/Calculator.apk---> out/$device/system/app/Calculator.apk \033[0m"
+	echo -e "\033[33m------filemanger-----\033[0m"
+	cp packages/FileExplorer_White/bin/FileExplorer_White.apk out/$device/system/app/FileManager.apk
+	echo -e "\033[32mpackage/FileExplorer_White/bin/FileExplorer_White.apk--> out/$device/system/app/FileManager.apk\033[0m"
+	echo -e "\033[33m------Deskclock------\033[0m"
+	cp packages/Deskclock/bin/Index.apk out/$device/system/app/Deskclock.apk
+	echo -e "\033[32mpackages/Deskclock/bin/Index.apk -->out/$device/system/app/Deskclock.apk\033[0m"
+	echo -e "\033[33m------Notes------\033[0m"
+	cp packages/notes/bin/NotesListActivity.apk out/$device/system/app/Notes.apk
+		echo -e "\033[32minstall packages/notes/bin/NotesListActivity.apk--->out/device/system/app/Notes.apk\033[0m"
+	make_compass
+	make_weather
+	make_soundrecorder
+	}
+build_decode_code(){
+	source build/make_batterymonitor
+	source build/make_Gallery2
+	source build/make_Mms
+	source build/make_Settings
+	source build/make_Phone
+	source build/make_Contacts
+	source build/make_SystemUI
+	source build/make_framework
+	source build/make_Quick
+	source build/make_launcher
+	source build/make_lockscreen
+	source build/make_browser
+
+
+	echo -e "\033[33m------personcenter------\033[0m"
+		cd packages
+		b personcenter
+		echo -e "\033[32minstall out/personcenter.apk--> ../out/$device/system/app/personcenter.apk\033[0m"
+		mv out/personcenter.apk ../out/$device/system/app/personcenter.apk
+		rmout
+		cd ../
+	echo -e "\033[33m------Settingsprovider------\033[0m"
+		cd packages/SettingsProvider/$CPU 
+		b SettingsProvider
+		mv out/SettingsProvider.apk ../../../out/$device/system/app/SettingsProvider.apk
+		rmout
+		cd ../../../
+	make_lockscreen
+	make_Phone
+	make_Contacts
+	make_Settings
+	make_Gallery2
+	make_Mms
+	make_SystemUI
+	make_Quick
+	make_Batterymonitor
+	make_framework-res
+	make_launcher
+	make_browser
+	}
+
+
+zip_package(){
+	cd out/$device
+	mkdir -p ../output_package 
+	zip -r ~/output_package/${device}_V${package_version}_${DATE}_release.zip *
+	cd ../../
+	}
+zipalignall(){
+	cd out/$device/system/app
+		for i in *.apk;do
+		echo "正在优化 $i ...... "
+  		zipalign -v 4 $i ../$i >> ~/logcat.xml
+   		echo "完成优化 $i ";
+   	done
+   		cd ../../../../
+   	cd out/$device/system/framework
+   		echo "正在优化 framework...... "
+	   	zipalign -v 4 framework-res.apk ../framework-res.apk > ~/logcat.xml
+	   	echo "完成优化 framework ";
+	cd ../
+	mv framework-res.apk framework/framework-res.apk
+	mv *.apk app/
+	cd ../../../
+
+	}
+update_buildprop(){
+	echo -e "\033[33m------build.prop\033[0m"
+		echo "ro.build.user=$USER" >> build.temp
+		echo "ro.build.display.id=$display_version" >> build.temp
+		echo "ro.build.version.incremental=eng.release3.`date "+%Y%m%d.%H%M%S"`" >> build.temp
+		echo "ro.build.date=$DATE" >> build.temp
+		
+		echo "ro.build.host=mint 17.0" >> build.temp
+		echo "ro.config.ringtone=Journey.ogg" >> build.temp
+		echo "ro.config.ringtone_2=hope.ogg" >> build.temp
+		echo "ro.config.notification_sound=Procyon.ogg" >> build.temp
+		echo "ro.config.alarm_alert=Dawn_chorus.ogg" >> build.temp
+	echo -e "\033[33mmodify old build.prop .....\033[0m"
+		sed -i '/ro.build.user/d' out/$device/system/build.prop
+		sed -i '/ro.build.display.id/d' out/$device/system/build.prop
+		sed -i '/ro.build.version.incremental/d' out/$device/system/build.prop
+		sed -i '/ro.build.host/d' out/$device/system/build.prop
+		sed -i '/ro.config.ringtone=/d' out/$device/system/build.prop
+		sed -i '/ro.config.ringtone_2/d' out/$device/system/build.prop
+		sed -i '/ro.config.notification_sound/d' out/$device/system/build.prop
+		sed -i '/ro.config.alarm_alert/d' out/$device/system/build.prop
+		sed -i '/ro.build.date=/d' out/$device/system/build.prop
+	echo -e "\033[32mmodify new build_prop\033[0m"
+		sed -i '/^# yunyun/r build.temp' out/$device/system/build.prop
+		rm build.temp
+
+	}
+build(){
+	cp_media 
+	source build/cp_prebuildapk $root
+	cp_prebuild_apk $root
+	cp_Souce_code_apk
+	build_decode_code
+	update_buildprop
+	zipalignall
+	zip_package 
+	}
+#stop() {
+	#while [ $? = 1 ]; 
+	#	sleep 3
+	#	echo -e "\033[31mthis is some error here !!\033[0m"
+		
+	#done
+	#}
+echo "starting work......"
+read -p "是否需要root？ (y/n)" root
+	# if [[ "$mini" == "" ]]; then
+		#statements
+		
+		# ##############################
+		# device=la2e
+		# CPU=MSM8625Q
+		# screen=720P
+		# androidversion=4.1
+		# echo -e "\033[33m starting build $device package\033[0m"
+		# # build
+		# echo -e "\033[33m $device build completed !\033[0m"
+		####################################
+		device=la2wmsm
+		CPU=MSM8228
+		screen=720P
+		androidversion=4.3
+		echo -e "\033[33m starting build $device package\033[0m"
+		build
+		echo -e "\033[33m $device build completed !\033[0m"
+		######################la3w##############
+		device=la3w
+		CPU=MSM8228
+		screen=1080P
+		androidversion=4.3
+		echo -e "\033[33m starting build $device package\033[0m"
+		build
+		echo -e "\033[33m $device build completed !\033[0m"
+		##################la3sw##########
+		device=la3sw
+		screen=1080P
+		androidversion=4.3
+		echo -e "\033[33m starting build $device package\033[0m"
+		cp_media 
+		source build/cp_prebuildapk $root
+		cp -r  out/la3w/system/app out/$device/system
+		cp -r  out/la3w/system/framework out/$device/system
+		update_buildprop
+		zipalignall
+		zip_package 
+		echo -e "\033[33m $device build completed !\033[0m"
+		# ##################la2l##################
+		# device=la2l
+		# echo -e "\033[33mstarting build $device package\033[0m"
+		# #build
+		# echo -e "\033[33m$device build completed !\033[0m"
+		# #################la5w##################
+		# device=la5w
+		# CPU=MT6592
+		# screen="720P"
+		# androidversion=4.4
+		# echo -e "\033[33mstarting build $device package\033[0m"
+		# build
+		# echo -e "\033[33m$device build completed !\033[0m"
+	# else
+	# 	echo -e "\033[33mstarting to make single task of $mini\033[0m"
+	# 	device=$mini
+	# echo -e "\033[33mstarting build $device package\033[0m"
+	# build
+	# echo -e "\033[33m$device build completed !\033[0m"
+	# fi
+echo "#######################################################################"
+	echo
+	echo
+	echo
+	echo
+	echo
+	echo -e "\033[34m           all work is done !\033[0m"
+	echo -e "\033[34m            please check it !\033[0m"
+	echo
+	echo
+	echo
+	echo
+	echo "########################################################################"
+
